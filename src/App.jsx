@@ -1,8 +1,8 @@
 const TEST_GIFS = [
-	'https://i.giphy.com/media/eIG0HfouRQJQr1wBzz/giphy.webp',
-	'https://media3.giphy.com/media/L71a8LW2UrKwPaWNYM/giphy.gif?cid=ecf05e47rr9qizx2msjucl1xyvuu47d7kf25tqt2lvo024uo&rid=giphy.gif&ct=g',
-	'https://media4.giphy.com/media/AeFmQjHMtEySooOc8K/giphy.gif?cid=ecf05e47qdzhdma2y3ugn32lkgi972z9mpfzocjj6z1ro4ec&rid=giphy.gif&ct=g',
-	'https://i.giphy.com/media/PAqjdPkJLDsmBRSYUp/giphy.webp'
+	'https://media1.giphy.com/media/13eshB55I4fBL2/giphy.gif?cid=790b7611c224a2e0c5542e07f4aaf5ab7fc5f1d2e541f1c3&rid=giphy.gif&ct=g',
+	'https://media4.giphy.com/media/pXJksds5tRAic/giphy.gif?cid=790b76113a4d15a93fff13157c1124ff28ffa574ba9ed012&rid=giphy.gif&ct=g',
+	'https://media1.giphy.com/media/YUx07ixq8GCSA/giphy.gif?cid=790b7611f636b50030a92351b893cc6b1571abbf3bbc5b6f&rid=giphy.gif&ct=g',
+	'https://media4.giphy.com/media/74hxSB8JCnxwQ/giphy.gif?cid=790b761100efd48a004d1d39aa3a011c0e86b7dcb07efc80&rid=giphy.gif&ct=g'
 ]
 
 /*
@@ -19,6 +19,9 @@ const App = () => {
 
   // State
 const [walletAddress, setWalletAddress] = useState(null);
+const [inputValue, setInputValue] = useState('');
+const [gifList, setGifList] = useState([]);
+
   /*
    * This function holds the logic for deciding if a Phantom Wallet is
    * connected or not
@@ -52,6 +55,21 @@ const connectWallet = async () => {
   }
 };
 
+const onInputChange = (event) => {
+  const { value } = event.target;
+  setInputValue(value);
+};
+
+const sendGif = async () => {
+  if (inputValue.length > 0) {
+    console.log('Gif link:', inputValue);
+    setGifList([...gifList, inputValue]);
+    setInputValue('');
+  } else {
+    console.log('Empty input. Try again.');
+  }
+};
+
   /*
    * We want to render this UI when the user hasn't connected
    * their wallet to our app yet.
@@ -65,6 +83,38 @@ const connectWallet = async () => {
     </button>
   );
 
+
+
+const renderConnectedContainer = () => (
+    <div className="connected-container">
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          sendGif();
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Enter gif link!"
+          value={inputValue}
+          onChange={onInputChange}
+        />
+        <button type="submit" className="cta-button submit-gif-button">
+          Submit
+        </button>
+      </form>
+      <div className="gif-grid">
+        {/* Map through gifList instead of TEST_GIFS */}
+        {gifList.map((gif) => (
+          <div className="gif-item" key={gif}>
+            <img src={gif} alt={gif} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+
   /*
    * When our component first mounts, let's check to see if we have a connected
    * Phantom Wallet
@@ -77,6 +127,17 @@ const connectWallet = async () => {
     return () => window.removeEventListener('load', onLoad);
   }, []);
 
+  useEffect(() => {
+  if (walletAddress) {
+    console.log('Fetching GIF list...');
+    
+    // Call Solana program here.
+
+    // Set state
+    setGifList(TEST_GIFS);
+  }
+}, [walletAddress]);
+
   return (
     <div className="App">
       <div className="container">
@@ -85,7 +146,9 @@ const connectWallet = async () => {
           <p className="sub-text">
             Share your favourite slurp moments
           </p>
-              {!walletAddress && renderNotConnectedContainer()}
+             {!walletAddress && renderNotConnectedContainer()}
+        {/* We just need to add the inverse here! */}
+        {walletAddress && renderConnectedContainer()}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
