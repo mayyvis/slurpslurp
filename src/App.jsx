@@ -142,9 +142,9 @@ const renderConnectedContainer = () => (
     <div className="App">
       <div className="container">
         <div className="header-container">
-          <p className="header">naughtyslurps</p>
+          <p className="header">Share your favourite slurp</p>
           <p className="sub-text">
-            Share your favourite slurp moments
+            the first @naughtyslurp web3 project
           </p>
              {!walletAddress && renderNotConnectedContainer()}
         {/* We just need to add the inverse here! */}
