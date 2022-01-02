@@ -33,6 +33,18 @@
   color: black;
 }
 
+.label {
+  font-size: 14px;
+  font-weight: 400;
+  color: black;
+}
+
+.caption {
+  font-size: 10px;
+  font-weight: 400;
+  color: grey;
+}
+
 .gradient-text {
   background: -webkit-linear-gradient(left, #60c657 30%, #35aee2 60%);
   background-clip: text;

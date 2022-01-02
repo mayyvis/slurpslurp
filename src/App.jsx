@@ -12,7 +12,7 @@ const TEST_GIFS = [
   'https://media4.giphy.com/media/74hxSB8JCnxwQ/giphy.gif?cid=790b761100efd48a004d1d39aa3a011c0e86b7dcb07efc80&rid=giphy.gif&ct=g'
 ]
 
-// SystemProgram is a reference to the Solana runtime!
+// SystemProgram is a referencee to the Solana runtime!
 const { SystemProgram, Keypair } = web3;
 
 const arr = Object.values(kp._keypair.secretKey)
@@ -191,6 +191,8 @@ const App = () => {
             {gifList.map((item, index) => (
               <div className="gif-item" key={index}>
                 <img src={item.gifLink} />
+                <p className="caption">USER ADDRESS:  <b>{item.userAddress.toString()}</b></p>
+
               </div>
             ))}
           </div>
@@ -240,7 +242,7 @@ const App = () => {
         <div className="header-container">
           <p className="header">Share your favourite slurp</p>
           <p className="sub-text">
-            the first @naughtyslurp web3 project
+            stay slurpin'
           </p>
           {!walletAddress && renderNotConnectedContainer()}
           {/* We just need to add the inverse here! */}
