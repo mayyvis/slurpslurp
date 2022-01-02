@@ -1,3 +1,4 @@
+import { defineConfig } from "vite";
 import reactRefresh from '@vitejs/plugin-react-refresh'
 
 /**
@@ -5,6 +6,9 @@ import reactRefresh from '@vitejs/plugin-react-refresh'
  * @type { import('vite').UserConfig }
  */
 export default {
+    define: {
+    global: {},
+  },
   plugins: [reactRefresh()],
   server: {
     host: '0.0.0.0',
